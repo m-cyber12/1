@@ -1,9 +1,39 @@
-name: test
+name: Firefox extension
+
 on:
   push:
-  workflow_dispatch:
+  pull_request:
+
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello"
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Lint
+        run: npx --yes web-ext@8 lint
+
+      - name: Build
+        run: npx --yes web-ext@8 build --source-dir . --artifacts-dir ./dist --overwrite-dest
+
+      - name: Sign with Mozilla AMO (optional)
+        if: ${{ secrets.AMO_JWT_ISSUER != '' && secrets.AMO_JWT_SECRET != '' }}
+        env:
+          AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
+          AMO_JWT_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          npx --yes web-ext@8 sign \
+            --source-dir . \
+            --artifacts-dir ./dist \
+            --api-key "$AMO_JWT_ISSUER" \
+            --api-secret "$AMO_JWT_SECRET" \
+            --channel unlisted
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension
+          path: dist/
