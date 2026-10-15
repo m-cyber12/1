@@ -66,7 +66,8 @@ class MainActivity : AppCompatActivity() {
             desktopMode = !desktopMode
             settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
             toggleButton.text = if (desktopMode) "Mobile site" else "Desktop site"
-            webView.reload()
+            val current = webView.url ?: "https://flow.google.com/"
+            webView.loadUrl(current)
         }
 
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
