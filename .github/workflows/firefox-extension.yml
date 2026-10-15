@@ -1,4 +1,4 @@
-name: intermediate
+name: webext
 on:
   push:
   workflow_dispatch:
@@ -10,4 +10,4 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: node --version
+      - run: npx --yes web-ext@8 build --source-dir . --artifacts-dir ./dist --overwrite-dest
