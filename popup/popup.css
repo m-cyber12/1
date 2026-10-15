@@ -21,14 +21,14 @@
 }
 
 :root {
-  --ground: #080d20;
-  --ink: #eef1ff;
-  --muted: #949ecb;
+  --ground: #07110a;
+  --ink: #eaf7ee;
+  --muted: #86a790;
 
-  --open: #3fd0c9;
-  --closed: #e0954f;
-  --wait: #7b88c6;
-  --warn: #e8b551;
+  --open: #4ade80;
+  --closed: #f97316;
+  --wait: #60a5fa;
+  --warn: #facc15;
 
   --signal: var(--wait);
 

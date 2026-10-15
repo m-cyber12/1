@@ -1,25 +1,54 @@
 package com.mcyber12.aiflowbypasser
 
 import android.os.Bundle
+import android.view.Gravity
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var webView: WebView
+    private lateinit var toggleButton: Button
+    private var desktopMode = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val webView = WebView(this)
-        setContentView(webView)
+        webView = WebView(this)
+        toggleButton = Button(this).apply {
+            text = "Desktop site"
+        }
+
+        val container = FrameLayout(this)
+        container.addView(
+            webView,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+
+        val buttonParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.TOP or Gravity.END
+            topMargin = 16
+            rightMargin = 16
+        }
+        container.addView(toggleButton, buttonParams)
+
+        setContentView(container)
 
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         settings.databaseEnabled = true
-        settings.userAgentString =
-            "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+        settings.userAgentString = mobileUserAgent()
 
         WebView.setWebContentsDebuggingEnabled(true)
 
@@ -33,6 +62,23 @@ class MainActivity : AppCompatActivity() {
         }
         webView.webChromeClient = WebChromeClient()
 
+        toggleButton.setOnClickListener {
+            desktopMode = !desktopMode
+            settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
+            toggleButton.text = if (desktopMode) "Mobile site" else "Desktop site"
+            webView.reload()
+        }
+
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (webView.canGoBack()) {
+                    webView.goBack()
+                } else {
+                    finish()
+                }
+            }
+        })
+
         webView.loadUrl("https://flow.google.com/")
     }
 
@@ -41,7 +87,13 @@ class MainActivity : AppCompatActivity() {
             val script = assets.open("flow_patch.js").bufferedReader().use { it.readText() }
             view?.evaluateJavascript(script, null)
         } catch (e: Exception) {
-            android.util.Log.e("FlowBypasser", "Failed to inject patch", e)
+            android.util.Log.e("Flow", "Failed to inject patch", e)
         }
     }
+
+    private fun mobileUserAgent() =
+        "Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36"
+
+    private fun desktopUserAgent() =
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
