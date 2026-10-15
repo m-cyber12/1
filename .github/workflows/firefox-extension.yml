@@ -1,4 +1,4 @@
-name: webext
+name: Firefox extension
 on:
   push:
   workflow_dispatch:
@@ -12,3 +12,7 @@ jobs:
           node-version: "20"
       - run: npx --yes web-ext@8 lint
       - run: npx --yes web-ext@8 build --source-dir . --artifacts-dir ./dist --overwrite-dest
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firefox-extension
+          path: dist/
