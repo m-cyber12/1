@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: "20"
       - run: npx --yes web-ext@8 lint
-      - run: npx --yes web-ext@8 build --source-dir . --artifacts-dir ./dist --overwrite-dest
+      - run: npx --yes web-ext@8 build --source-dir . --artifacts-dir ./dist --overwrite-dest --filename AI-Flow-Bypasser.xpi
       - name: Sign with Mozilla AMO (optional)
         env:
           AMO_JWT_ISSUER: ${{ secrets.AMO_JWT_ISSUER }}
