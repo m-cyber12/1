@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(container)
 
+        splash.postDelayed({ splash.visibility = View.GONE }, 8000)
+
         val settings = webView.settings
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
@@ -87,6 +89,14 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
+                splash.visibility = View.GONE
+            }
+
+            override fun onReceivedError(
+                view: WebView?,
+                request: android.webkit.WebResourceRequest?,
+                error: android.webkit.WebResourceError?
+            ) {
                 splash.visibility = View.GONE
             }
 
