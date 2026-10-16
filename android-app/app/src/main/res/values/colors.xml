@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_flow_background">#0F172A</color>
+    <color name="ic_flow_background">#1E1B4B</color>
+    <color name="splash_background">#111827</color>
+    <color name="splash_accent">#A78BFA</color>
 </resources>
