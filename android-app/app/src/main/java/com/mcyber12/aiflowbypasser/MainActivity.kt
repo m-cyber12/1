@@ -126,11 +126,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun inject(view: WebView?) {
-        try {
-            val script = assets.open("flow_patch.js").bufferedReader().use { it.readText() }
-            view?.evaluateJavascript(script, null)
-        } catch (e: Exception) {
-            android.util.Log.e("Flow", "Failed to inject patch", e)
+        for (asset in listOf("flow_patch.js", "theme.js")) {
+            try {
+                val script = assets.open(asset).bufferedReader().use { it.readText() }
+                view?.evaluateJavascript(script, null)
+            } catch (e: Exception) {
+                android.util.Log.e("Flow", "Failed to inject $asset", e)
+            }
         }
     }
 
