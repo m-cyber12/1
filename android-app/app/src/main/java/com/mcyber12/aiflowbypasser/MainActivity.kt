@@ -7,6 +7,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.webkit.WebSettingsCompat
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         settings.domStorageEnabled = true
         settings.databaseEnabled = true
         settings.userAgentString = mobileUserAgent()
+        WebSettingsCompat.setRequestedWithHeaderOriginAllowList(settings, emptySet())
 
         WebView.setWebContentsDebuggingEnabled(true)
 
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                request?.url?.let { view?.loadUrl(it.toString(), mapOf("X-Requested-With" to "")) }
+                request?.url?.let { view?.loadUrl(it.toString()) }
                 return true
             }
         }
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             toggleButton.text = if (desktopMode) "Mobile site" else "Desktop site"
             val current = webView.url ?: "https://flow.google.com/"
             webView.clearCache(true)
-            webView.loadUrl(current, mapOf("X-Requested-With" to ""))
+            webView.loadUrl(current)
         }
 
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        webView.loadUrl("https://flow.google.com/", mapOf("X-Requested-With" to ""))
+        webView.loadUrl("https://flow.google.com/")
     }
 
     private fun inject(view: WebView?) {
