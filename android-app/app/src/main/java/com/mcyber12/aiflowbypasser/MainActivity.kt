@@ -7,13 +7,19 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.webkit.URLUtil
+import android.net.Uri
+import android.os.Environment
+import android.app.DownloadManager as SystemDownloadManager
 import androidx.webkit.WebSettingsCompat
 import com.mcyber12.aiflowbypasser.downloads.DownloadManager
 import android.app.AlertDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -55,6 +61,27 @@ class MainActivity : AppCompatActivity() {
             rightMargin = 16
         }
         container.addView(toggleButton, buttonParams)
+
+        val navParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.TOP or Gravity.START
+            topMargin = 16
+            leftMargin = 16
+        }
+        val navRow = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+        }
+        val backButton = Button(this).apply { text = "Back" }
+        val forwardButton = Button(this).apply { text = "Forward" }
+        val reloadButton = Button(this).apply { text = "Reload" }
+        val homeButton = Button(this).apply { text = "Home" }
+        navRow.addView(backButton)
+        navRow.addView(forwardButton)
+        navRow.addView(reloadButton)
+        navRow.addView(homeButton)
+        container.addView(navRow, navParams)
 
         val downloadsParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.WRAP_CONTENT,
@@ -120,6 +147,25 @@ class MainActivity : AppCompatActivity() {
 
         }
         webView.webChromeClient = WebChromeClient()
+        backButton.setOnClickListener { if (webView.canGoBack()) webView.goBack() }
+        forwardButton.setOnClickListener { if (webView.canGoForward()) webView.goForward() }
+        reloadButton.setOnClickListener { webView.reload() }
+        homeButton.setOnClickListener { lastLoadedUrl = "https://flow.google.com/"; webView.clearCache(true); webView.loadUrl(lastLoadedUrl) }
+
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimeType, contentLength ->
+            val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
+            val request = SystemDownloadManager.Request(Uri.parse(url)).apply {
+                addRequestHeader("User-Agent", userAgent)
+                setTitle(fileName)
+                setDescription("Downloading from Flow")
+                setNotificationVisibility(SystemDownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+            }
+            val manager = getSystemService(Context.DOWNLOAD_SERVICE) as SystemDownloadManager
+            manager.enqueue(request)
+            com.mcyber12.aiflowbypasser.downloads.DownloadManager.startDownload(fileName)
+            Toast.makeText(this, "Download started: $fileName", Toast.LENGTH_SHORT).show()
+        }
 
         toggleButton.setOnClickListener {
             desktopMode = !desktopMode
