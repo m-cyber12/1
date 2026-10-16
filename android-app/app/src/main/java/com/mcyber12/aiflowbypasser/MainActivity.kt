@@ -1,116 +1,42 @@
 package com.mcyber12.aiflowbypasser
 
+import android.app.AlertDialog
+import android.app.DownloadManager as SystemDownloadManager
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
+import android.os.Environment
+import android.view.View
 import android.webkit.CookieManager
+import android.webkit.URLUtil
 import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.webkit.URLUtil
-import android.net.Uri
-import android.os.Environment
-import android.app.DownloadManager as SystemDownloadManager
-import androidx.webkit.WebSettingsCompat
-import com.mcyber12.aiflowbypasser.downloads.DownloadManager
-import android.app.AlertDialog
-import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.View
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.FrameLayout
-import android.widget.TextView
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.webkit.WebSettingsCompat
+import com.mcyber12.aiflowbypasser.downloads.DownloadManager
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
-    private lateinit var toggleButton: Button
-    private lateinit var downloadsButton: Button
+    private lateinit var splash: View
+    private lateinit var desktopButton: ImageButton
     private var desktopMode = false
-    private var lastLoadedUrl = "https://flow.google.com/"
+    private val homeUrl = "https://flow.google.com/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        webView = WebView(this)
-        toggleButton = Button(this).apply {
-            text = "Desktop site"
-        }
-        downloadsButton = Button(this).apply {
-            text = "Downloads"
-        }
-
-        val container = FrameLayout(this)
-        container.addView(
-            webView,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            )
-        )
-
-        val buttonParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            gravity = Gravity.TOP or Gravity.END
-            topMargin = 16
-            rightMargin = 16
-        }
-        container.addView(toggleButton, buttonParams)
-
-        val navParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            gravity = Gravity.TOP or Gravity.START
-            topMargin = 16
-            leftMargin = 16
-        }
-        val navRow = LinearLayout(this).apply {
-            orientation = LinearLayout.HORIZONTAL
-        }
-        val backButton = Button(this).apply { text = "Back" }
-        val forwardButton = Button(this).apply { text = "Forward" }
-        val reloadButton = Button(this).apply { text = "Reload" }
-        val homeButton = Button(this).apply { text = "Home" }
-        navRow.addView(backButton)
-        navRow.addView(forwardButton)
-        navRow.addView(reloadButton)
-        navRow.addView(homeButton)
-        container.addView(navRow, navParams)
-
-        val downloadsParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.WRAP_CONTENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            gravity = Gravity.BOTTOM or Gravity.END
-            bottomMargin = 24
-            rightMargin = 16
-        }
-        container.addView(downloadsButton, downloadsParams)
-
-        val splash = TextView(this).apply {
-            text = "Nova Web"
-            textSize = 34f
-            setTextColor(Color.parseColor("#A78BFA"))
-            gravity = android.view.Gravity.CENTER
-            background = ColorDrawable(Color.parseColor("#111827"))
-        }
-        container.addView(
-            splash,
-            FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT
-            )
-        )
-
-        setContentView(container)
-
-        splash.postDelayed({ splash.visibility = View.GONE }, 8000)
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        val forwardButton = findViewById<ImageButton>(R.id.forwardButton)
+        val reloadButton = findViewById<ImageButton>(R.id.reloadButton)
+        val homeButton = findViewById<ImageButton>(R.id.homeButton)
+        desktopButton = findViewById(R.id.desktopButton)
+        val downloadsButton = findViewById<ImageButton>(R.id.downloadsButton)
+        webView = findViewById(R.id.webView)
+        splash = findViewById(R.id.splash)
 
         val settings = webView.settings
         settings.javaScriptEnabled = true
@@ -144,54 +70,43 @@ class MainActivity : AppCompatActivity() {
             ) {
                 splash.visibility = View.GONE
             }
-
         }
         webView.webChromeClient = WebChromeClient()
+
         backButton.setOnClickListener { if (webView.canGoBack()) webView.goBack() }
         forwardButton.setOnClickListener { if (webView.canGoForward()) webView.goForward() }
         reloadButton.setOnClickListener { webView.reload() }
-        homeButton.setOnClickListener { lastLoadedUrl = "https://flow.google.com/"; webView.clearCache(true); webView.loadUrl(lastLoadedUrl) }
+        homeButton.setOnClickListener {
+            webView.clearCache(true)
+            webView.loadUrl(homeUrl)
+        }
 
-        webView.setDownloadListener { url, userAgent, contentDisposition, mimeType, contentLength ->
+        desktopButton.setOnClickListener {
+            desktopMode = !desktopMode
+            settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
+            desktopButton.alpha = if (desktopMode) 1f else 0.5f
+            webView.clearCache(true)
+            val current = if (webView.url.isNullOrBlank()) homeUrl else webView.url
+            webView.loadUrl(current)
+        }
+        desktopButton.alpha = 0.5f
+
+        webView.setDownloadListener { url, userAgent, contentDisposition, mimeType, _ ->
             val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
             val request = SystemDownloadManager.Request(Uri.parse(url)).apply {
                 addRequestHeader("User-Agent", userAgent)
                 setTitle(fileName)
-                setDescription("Downloading from Flow")
                 setNotificationVisibility(SystemDownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
             }
             val manager = getSystemService(Context.DOWNLOAD_SERVICE) as SystemDownloadManager
             manager.enqueue(request)
-            com.mcyber12.aiflowbypasser.downloads.DownloadManager.startDownload(fileName)
+            DownloadManager.startDownload(fileName)
             Toast.makeText(this, "Download started: $fileName", Toast.LENGTH_SHORT).show()
         }
 
-        toggleButton.setOnClickListener {
-            desktopMode = !desktopMode
-            settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
-            toggleButton.text = if (desktopMode) "Mobile site" else "Desktop site"
-            val current = lastLoadedUrl
-            webView.clearCache(true)
-            webView.loadUrl(current)
-            lastLoadedUrl = current
-        }
-
         downloadsButton.setOnClickListener {
-            val downloads = DownloadManager.listDownloads()
-            if (downloads.isEmpty()) {
-                Toast.makeText(this, "No downloads yet", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val text = downloads.joinToString("\n") { download ->
-                "${download.name}\n${if (download.downloaded) "${download.size} bytes" else "in progress"}"
-            }
-            AlertDialog.Builder(this)
-                .setTitle("Downloads")
-                .setMessage(text)
-                .setPositiveButton("Close", null)
-                .show()
+            showDownloads()
         }
 
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
@@ -204,8 +119,24 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        lastLoadedUrl = "https://flow.google.com/"
-        webView.loadUrl(lastLoadedUrl)
+        splash.postDelayed({ splash.visibility = View.GONE }, 8000)
+        webView.loadUrl(homeUrl)
+    }
+
+    private fun showDownloads() {
+        val downloads = DownloadManager.listDownloads()
+        if (downloads.isEmpty()) {
+            Toast.makeText(this, "No downloads yet", Toast.LENGTH_SHORT).show()
+            return
+        }
+        val text = downloads.joinToString("\n") { download ->
+            "${download.name}\n${if (download.downloaded) "${download.size} bytes" else "in progress"}"
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Downloads")
+            .setMessage(text)
+            .setPositiveButton("Close", null)
+            .show()
     }
 
     private fun inject(view: WebView?) {
