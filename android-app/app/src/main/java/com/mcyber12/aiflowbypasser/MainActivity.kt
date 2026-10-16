@@ -51,7 +51,11 @@ class MainActivity : AppCompatActivity() {
         settings.domStorageEnabled = true
         settings.databaseEnabled = true
         settings.userAgentString = mobileUserAgent()
-        WebSettingsCompat.setRequestedWithHeaderOriginAllowList(settings, emptySet())
+        try {
+            WebSettingsCompat.setRequestedWithHeaderOriginAllowList(settings, emptySet())
+        } catch (e: Exception) {
+            android.util.Log.e("Flow", "Requested-with allowlist failed", e)
+        }
 
         WebView.setWebContentsDebuggingEnabled(true)
 
