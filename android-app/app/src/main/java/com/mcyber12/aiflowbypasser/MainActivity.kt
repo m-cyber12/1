@@ -63,10 +63,6 @@ class MainActivity : AppCompatActivity() {
                 inject(view)
             }
 
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                request?.url?.let { view?.loadUrl(it.toString()) }
-                return true
-            }
         }
         webView.webChromeClient = WebChromeClient()
 
