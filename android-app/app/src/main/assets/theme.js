@@ -47,13 +47,4 @@
   }
 
   apply();
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", apply, { once: true });
-  }
-
-  try {
-    const observer = new MutationObserver(() => apply());
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-  } catch {}
 })();

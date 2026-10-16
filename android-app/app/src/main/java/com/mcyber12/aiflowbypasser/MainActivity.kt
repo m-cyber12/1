@@ -8,18 +8,22 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.webkit.WebSettingsCompat
+import android.app.AlertDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var toggleButton: Button
+    private lateinit var downloadsButton: Button
     private var desktopMode = false
+    private var lastLoadedUrl = "https://flow.google.com/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +31,9 @@ class MainActivity : AppCompatActivity() {
         webView = WebView(this)
         toggleButton = Button(this).apply {
             text = "Desktop site"
+        }
+        downloadsButton = Button(this).apply {
+            text = "Downloads"
         }
 
         val container = FrameLayout(this)
@@ -47,6 +54,16 @@ class MainActivity : AppCompatActivity() {
             rightMargin = 16
         }
         container.addView(toggleButton, buttonParams)
+
+        val downloadsParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            gravity = Gravity.BOTTOM or Gravity.END
+            bottomMargin = 24
+            rightMargin = 16
+        }
+        container.addView(downloadsButton, downloadsParams)
 
         val splash = TextView(this).apply {
             text = "Nova Web"
@@ -107,9 +124,27 @@ class MainActivity : AppCompatActivity() {
             desktopMode = !desktopMode
             settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
             toggleButton.text = if (desktopMode) "Mobile site" else "Desktop site"
-            val current = webView.url ?: "https://flow.google.com/"
+            val current = lastLoadedUrl
             webView.clearCache(true)
             webView.loadUrl(current)
+            lastLoadedUrl = current
+        }
+
+        downloadsButton.setOnClickListener {
+            val downloads = DownloadManager.listDownloads()
+            if (downloads.isEmpty()) {
+                Toast.makeText(this, "No downloads yet", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val text = downloads.joinToString("\n") { download ->
+                "${download.name}\n${if (download.downloaded) "${download.size} bytes" else "in progress"}"
+            }
+            AlertDialog.Builder(this)
+                .setTitle("Downloads")
+                .setMessage(text)
+                .setPositiveButton("Close", null)
+                .show()
         }
 
         onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
@@ -122,7 +157,8 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        webView.loadUrl("https://flow.google.com/")
+        lastLoadedUrl = "https://flow.google.com/"
+        webView.loadUrl(lastLoadedUrl)
     }
 
     private fun inject(view: WebView?) {
