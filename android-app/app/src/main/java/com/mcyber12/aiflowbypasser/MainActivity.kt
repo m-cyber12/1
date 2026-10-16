@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             settings.userAgentString = if (desktopMode) desktopUserAgent() else mobileUserAgent()
             desktopButton.alpha = if (desktopMode) 1f else 0.5f
             webView.clearCache(true)
-            val current = if (webView.url.isNullOrBlank()) homeUrl else webView.url
+            val current = webView.url?.takeIf { it.isNotBlank() } ?: homeUrl
             webView.loadUrl(current)
         }
         desktopButton.alpha = 0.5f
