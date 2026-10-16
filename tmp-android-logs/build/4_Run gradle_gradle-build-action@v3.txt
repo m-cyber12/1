@@ -1,0 +1,167 @@
+﻿2026-10-16T09:23:59.1318772Z ##[group]Run gradle/gradle-build-action@v3
+2026-10-16T09:23:59.1319944Z with:
+2026-10-16T09:23:59.1321100Z   gradle-version: 8.7
+2026-10-16T09:23:59.1322029Z   build-root-directory: android-app
+2026-10-16T09:23:59.1323079Z   arguments: :app:assembleDebug
+2026-10-16T09:23:59.1324075Z   cache-disabled: false
+2026-10-16T09:23:59.1324964Z   cache-read-only: true
+2026-10-16T09:23:59.1325856Z   cache-write-only: false
+2026-10-16T09:23:59.1326803Z   cache-overwrite-existing: false
+2026-10-16T09:23:59.1327966Z   gradle-home-cache-includes: caches
+notifications
+
+2026-10-16T09:23:59.1329202Z   gradle-home-cache-cleanup: false
+2026-10-16T09:23:59.1330218Z   add-job-summary: always
+2026-10-16T09:23:59.1331648Z   add-job-summary-as-pr-comment: never
+2026-10-16T09:23:59.1332794Z   dependency-graph: disabled
+2026-10-16T09:23:59.1333854Z   dependency-graph-continue-on-failure: true
+2026-10-16T09:23:59.1334971Z   build-scan-publish: false
+2026-10-16T09:23:59.1336111Z   validate-wrappers: false
+2026-10-16T09:23:59.1337086Z   generate-job-summary: true
+2026-10-16T09:23:59.1338127Z   gradle-home-cache-strict-match: false
+2026-10-16T09:23:59.1339191Z   workflow-job-context: null
+2026-10-16T09:23:59.1346859Z   github-token: ***
+2026-10-16T09:23:59.1347692Z env:
+2026-10-16T09:23:59.1348523Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-16T09:23:59.1349816Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-16T09:23:59.1351555Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-16T09:23:59.1353298Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-16T09:23:59.1354687Z ##[endgroup]
+2026-10-16T09:23:59.1417747Z ##[start-action display=Setup Gradle;id=__gradle_gradle-build-action.setup-gradle]
+2026-10-16T09:23:59.1655735Z ##[group]Run gradle/actions/setup-gradle@v3.5.0
+2026-10-16T09:23:59.1656840Z with:
+2026-10-16T09:23:59.1657575Z   gradle-version: 8.7
+2026-10-16T09:23:59.1658407Z   cache-disabled: false
+2026-10-16T09:23:59.1659262Z   cache-read-only: true
+2026-10-16T09:23:59.1660130Z   cache-write-only: false
+2026-10-16T09:23:59.1661226Z   cache-overwrite-existing: false
+2026-10-16T09:23:59.1662328Z   gradle-home-cache-includes: caches
+notifications
+
+2026-10-16T09:23:59.1663513Z   gradle-home-cache-cleanup: false
+2026-10-16T09:23:59.1664496Z   add-job-summary: always
+2026-10-16T09:23:59.1665419Z   add-job-summary-as-pr-comment: never
+2026-10-16T09:23:59.1666452Z   dependency-graph: disabled
+2026-10-16T09:23:59.1667446Z   dependency-graph-continue-on-failure: true
+2026-10-16T09:23:59.1668571Z   build-scan-publish: false
+2026-10-16T09:23:59.1669474Z   validate-wrappers: false
+2026-10-16T09:23:59.1670389Z   generate-job-summary: true
+2026-10-16T09:23:59.1671454Z   arguments: :app:assembleDebug
+2026-10-16T09:23:59.1672423Z   build-root-directory: android-app
+2026-10-16T09:23:59.1673460Z   gradle-home-cache-strict-match: false
+2026-10-16T09:23:59.1674485Z   workflow-job-context: null
+2026-10-16T09:23:59.1682345Z   github-token: ***
+2026-10-16T09:23:59.1683166Z env:
+2026-10-16T09:23:59.1683987Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-16T09:23:59.1685114Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-16T09:23:59.1686438Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-16T09:23:59.1688121Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.20-1/x64
+2026-10-16T09:23:59.1689590Z   GRADLE_ACTION_ID: gradle/gradle-build-action
+2026-10-16T09:23:59.1690751Z ##[endgroup]
+2026-10-16T09:23:59.3696912Z (node:2316) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-16T09:23:59.3699769Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-16T09:24:00.5614462Z Merged default JDK locations into /home/runner/.m2/toolchains.xml
+2026-10-16T09:24:00.5620093Z ##[group]Restore Gradle state from cache
+2026-10-16T09:24:00.6345013Z ##[warning]Failed to restore gradle-home-v1|Linux|build[56baedeb4a54d664139cbc8c9aca5444]-777faab671518f123037d2ebd3eeec6f30aa9acd: Error: Cache service responded with 400
+2026-10-16T09:24:00.6446865Z Gradle User Home cache not found. Will initialize empty.
+2026-10-16T09:24:00.6448047Z ##[endgroup]
+2026-10-16T09:24:00.7339348Z ##[group]Provision Gradle 8.7
+2026-10-16T09:24:00.7858595Z ##[warning]Restore Gradle distribution 8.7 failed: Error: Cache service responded with 400
+2026-10-16T09:24:00.7860600Z Gradle distribution 8.7 not found in cache. Will download.
+2026-10-16T09:24:01.5113402Z Downloaded https://services.gradle.org/distributions/gradle-8.7-bin.zip to /home/runner/gradle-installations/downloads/gradle-8.7-bin.zip (size 134184980)
+2026-10-16T09:24:01.5172192Z [command]/usr/bin/unzip -o -q /home/runner/gradle-installations/downloads/gradle-8.7-bin.zip
+2026-10-16T09:24:02.4934562Z Extracted Gradle 8.7 to /home/runner/gradle-installations/installs/gradle-8.7
+2026-10-16T09:24:02.4935961Z Provisioned Gradle executable /home/runner/gradle-installations/installs/gradle-8.7/bin/gradle
+2026-10-16T09:24:02.4938068Z ##[endgroup]
+2026-10-16T09:24:02.4941250Z [command]/home/runner/gradle-installations/installs/gradle-8.7/bin/gradle :app:assembleDebug
+2026-10-16T09:24:03.4198110Z 
+2026-10-16T09:24:03.4211899Z Welcome to Gradle 8.7!
+2026-10-16T09:24:03.4212521Z 
+2026-10-16T09:24:03.4212947Z Here are the highlights of this release:
+2026-10-16T09:24:03.4213695Z  - Compiling and testing with Java 22
+2026-10-16T09:24:03.4214375Z  - Cacheable Groovy script compilation
+2026-10-16T09:24:03.4215050Z  - New methods in lazy collection properties
+2026-10-16T09:24:03.4215547Z 
+2026-10-16T09:24:03.4216056Z For more details see https://docs.gradle.org/8.7/release-notes.html
+2026-10-16T09:24:03.4218510Z 
+2026-10-16T09:24:03.8153954Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-10-16T09:25:01.6161992Z WARNING: We recommend using a newer Android Gradle plugin to use compileSdk = 34
+2026-10-16T09:25:01.6191216Z 
+2026-10-16T09:25:01.6196950Z This Android Gradle plugin (8.1.0) was tested up to compileSdk = 33 (and compileSdkPreview = "UpsideDownCakePrivacySandbox").
+2026-10-16T09:25:01.6198317Z 
+2026-10-16T09:25:01.6199161Z You are strongly encouraged to update your project to use a newer
+2026-10-16T09:25:01.6199999Z Android Gradle plugin that has been tested with compileSdk = 34.
+2026-10-16T09:25:01.6200732Z 
+2026-10-16T09:25:01.6201113Z If you are already using the latest version of the Android Gradle plugin,
+2026-10-16T09:25:01.6202135Z you may need to wait until a newer version with support for compileSdk = 34 is available.
+2026-10-16T09:25:01.6202745Z 
+2026-10-16T09:25:01.6202951Z To suppress this warning, add/update
+2026-10-16T09:25:01.6203519Z     android.suppressUnsupportedCompileSdk=34
+2026-10-16T09:25:01.6204078Z to this project's gradle.properties.
+2026-10-16T09:25:03.8149957Z Checking the license for package Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/licenses
+2026-10-16T09:25:03.9153154Z License for package Android SDK Build-Tools 33.0.1 accepted.
+2026-10-16T09:25:03.9154409Z Preparing "Install Android SDK Build-Tools 33.0.1 v.33.0.1".
+2026-10-16T09:25:04.9148389Z "Install Android SDK Build-Tools 33.0.1 v.33.0.1" ready.
+2026-10-16T09:25:04.9149079Z Installing Android SDK Build-Tools 33.0.1 in /usr/local/lib/android/sdk/build-tools/33.0.1
+2026-10-16T09:25:04.9149690Z "Install Android SDK Build-Tools 33.0.1 v.33.0.1" complete.
+2026-10-16T09:25:05.2153645Z "Install Android SDK Build-Tools 33.0.1 v.33.0.1" finished.
+2026-10-16T09:25:05.7187397Z > Task :app:preBuild UP-TO-DATE
+2026-10-16T09:25:05.7201575Z > Task :app:preDebugBuild UP-TO-DATE
+2026-10-16T09:25:05.8149245Z > Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+2026-10-16T09:25:05.8151216Z > Task :app:checkKotlinGradlePluginConfigurationErrors
+2026-10-16T09:25:08.6170309Z > Task :app:generateDebugResValues
+2026-10-16T09:25:08.6183885Z > Task :app:checkDebugAarMetadata
+2026-10-16T09:25:08.7148099Z > Task :app:mapDebugSourceSetPaths
+2026-10-16T09:25:08.7164706Z > Task :app:generateDebugResources
+2026-10-16T09:25:09.5173925Z > Task :app:packageDebugResources
+2026-10-16T09:25:10.1148082Z > Task :app:mergeDebugResources
+2026-10-16T09:25:11.2151447Z > Task :app:createDebugCompatibleScreenManifests
+2026-10-16T09:25:11.2171721Z > Task :app:extractDeepLinksDebug
+2026-10-16T09:25:11.3171927Z > Task :app:parseDebugLocalResources
+2026-10-16T09:25:11.5149543Z > Task :app:processDebugMainManifest
+2026-10-16T09:25:11.6150397Z > Task :app:processDebugManifest
+2026-10-16T09:25:11.6151689Z > Task :app:javaPreCompileDebug
+2026-10-16T09:25:11.6152432Z > Task :app:mergeDebugShaders
+2026-10-16T09:25:11.7157542Z > Task :app:compileDebugShaders NO-SOURCE
+2026-10-16T09:25:11.7161297Z > Task :app:generateDebugAssets UP-TO-DATE
+2026-10-16T09:25:11.8148792Z > Task :app:mergeDebugAssets
+2026-10-16T09:25:11.8149639Z > Task :app:processDebugManifestForPackage
+2026-10-16T09:25:11.8150319Z > Task :app:compressDebugAssets
+2026-10-16T09:25:12.6168937Z > Task :app:desugarDebugFileDependencies
+2026-10-16T09:25:13.1149533Z > Task :app:processDebugResources
+2026-10-16T09:25:13.1150273Z > Task :app:checkDebugDuplicateClasses
+2026-10-16T09:25:28.3211022Z 
+2026-10-16T09:25:28.3241481Z > Task :app:compileDebugKotlin FAILED
+2026-10-16T09:25:28.3271775Z e: file:///home/runner/work/1/1/android-app/app/src/main/java/com/mcyber12/aiflowbypasser/MainActivity.kt:134:29 Unresolved reference: DownloadManager
+2026-10-16T09:25:28.3273838Z e: file:///home/runner/work/1/1/android-app/app/src/main/java/com/mcyber12/aiflowbypasser/MainActivity.kt:140:55 Cannot infer a type for this parameter. Please specify it explicitly.
+2026-10-16T09:25:28.3275781Z e: file:///home/runner/work/1/1/android-app/app/src/main/java/com/mcyber12/aiflowbypasser/MainActivity.kt:145:18 Overload resolution ambiguity: 
+2026-10-16T09:25:28.3277325Z public open fun setMessage(p0: CharSequence!): AlertDialog.Builder! defined in android.app.AlertDialog.Builder
+2026-10-16T09:25:28.3279422Z public open fun setMessage(p0: Int): AlertDialog.Builder! defined in android.app.AlertDialog.Builder
+2026-10-16T09:25:28.3281229Z e: file:///home/runner/work/1/1/android-app/app/src/main/java/com/mcyber12/aiflowbypasser/downloads/DownloadManager.kt:16:23 Unresolved reference: addFirst
+2026-10-16T09:25:28.3283176Z e: file:///home/runner/work/1/1/android-app/app/src/main/java/com/mcyber12/aiflowbypasser/downloads/DownloadManager.kt:32:23 Unresolved reference: addFirst
+2026-10-16T09:25:40.4153743Z 
+2026-10-16T09:25:40.4171396Z > Task :app:mergeExtDexDebug
+2026-10-16T09:25:40.4171786Z 
+2026-10-16T09:25:40.4173349Z FAILURE: Build failed with an exception.
+2026-10-16T09:25:40.4173734Z 
+2026-10-16T09:25:40.4173864Z * What went wrong:
+2026-10-16T09:25:40.4174304Z Execution failed for task ':app:compileDebugKotlin'.
+2026-10-16T09:25:40.4175576Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2026-10-16T09:25:40.4176823Z    > Compilation error. See log for more details
+2026-10-16T09:25:40.4177203Z 
+2026-10-16T09:25:40.4177333Z * Try:
+2026-10-16T09:25:40.4177736Z > Run with --stacktrace option to get the stack trace.
+2026-10-16T09:25:40.4178379Z > Run with --info or --debug option to get more log output.
+2026-10-16T09:25:40.4178950Z > Run with --scan to get full insights.
+2026-10-16T09:25:40.4179526Z > Get more help at https://help.gradle.org.
+2026-10-16T09:25:40.5181403Z 
+2026-10-16T09:25:40.5192269Z Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+2026-10-16T09:25:40.5208022Z 
+2026-10-16T09:25:40.5252005Z You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+2026-10-16T09:25:40.5261093Z 
+2026-10-16T09:25:40.5301027Z For more on this, please refer to https://docs.gradle.org/8.7/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+2026-10-16T09:25:40.5302217Z 
+2026-10-16T09:25:40.5302395Z BUILD FAILED in 1m 37s
+2026-10-16T09:25:40.5302819Z 21 actionable tasks: 21 executed
+2026-10-16T09:25:40.9697401Z ##[error]Gradle build failed: see console output for details
+2026-10-16T09:25:40.9924681Z ##[end-action id=__gradle_gradle-build-action.setup-gradle;outcome=failure;conclusion=failure;duration_ms=101850]

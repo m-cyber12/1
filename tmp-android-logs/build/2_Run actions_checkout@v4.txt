@@ -1,0 +1,76 @@
+﻿2026-10-16T09:23:58.2781802Z ##[group]Run actions/checkout@v4
+2026-10-16T09:23:58.2783489Z with:
+2026-10-16T09:23:58.2784383Z   repository: m-cyber12/1
+2026-10-16T09:23:58.2792398Z   token: ***
+2026-10-16T09:23:58.2793217Z   ssh-strict: true
+2026-10-16T09:23:58.2794043Z   ssh-user: git
+2026-10-16T09:23:58.2794887Z   persist-credentials: true
+2026-10-16T09:23:58.2795795Z   clean: true
+2026-10-16T09:23:58.2796637Z   sparse-checkout-cone-mode: true
+2026-10-16T09:23:58.2797638Z   fetch-depth: 1
+2026-10-16T09:23:58.2798453Z   fetch-tags: false
+2026-10-16T09:23:58.2799302Z   show-progress: true
+2026-10-16T09:23:58.2800199Z   lfs: false
+2026-10-16T09:23:58.2801374Z   submodules: false
+2026-10-16T09:23:58.2802282Z   set-safe-directory: true
+2026-10-16T09:23:58.2803259Z   allow-unsafe-pr-checkout: false
+2026-10-16T09:23:58.2804558Z env:
+2026-10-16T09:23:58.2805418Z   ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+2026-10-16T09:23:58.2806589Z   ANDROID_HOME: /usr/local/lib/android/sdk
+2026-10-16T09:23:58.2807633Z ##[endgroup]
+2026-10-16T09:23:58.3905761Z Syncing repository: m-cyber12/1
+2026-10-16T09:23:58.3909999Z ##[group]Getting Git version info
+2026-10-16T09:23:58.3912294Z Working directory is '/home/runner/work/1/1'
+2026-10-16T09:23:58.3915272Z [command]/usr/bin/git version
+2026-10-16T09:23:58.3979708Z git version 2.55.0
+2026-10-16T09:23:58.4012857Z ##[endgroup]
+2026-10-16T09:23:58.4022737Z Temporarily overriding HOME='/home/runner/work/_temp/2b663af1-750f-474d-9988-320ba2207d35' before making global git config changes
+2026-10-16T09:23:58.4026287Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T09:23:58.4030307Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/1/1
+2026-10-16T09:23:58.4082798Z Deleting the contents of '/home/runner/work/1/1'
+2026-10-16T09:23:58.4090370Z ##[group]Initializing the repository
+2026-10-16T09:23:58.4095780Z [command]/usr/bin/git init /home/runner/work/1/1
+2026-10-16T09:23:58.4217252Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T09:23:58.4221723Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T09:23:58.4224973Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T09:23:58.4227577Z hint: call:
+2026-10-16T09:23:58.4228571Z hint:
+2026-10-16T09:23:58.4229821Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T09:23:58.4231378Z hint:
+2026-10-16T09:23:58.4232843Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T09:23:58.4235160Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T09:23:58.4236935Z hint:
+2026-10-16T09:23:58.4237780Z hint: 	git branch -m <name>
+2026-10-16T09:23:58.4238865Z hint:
+2026-10-16T09:23:58.4240320Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T09:23:58.4244499Z Initialized empty Git repository in /home/runner/work/1/1/.git/
+2026-10-16T09:23:58.4248930Z [command]/usr/bin/git remote add origin https://github.com/m-cyber12/1
+2026-10-16T09:23:58.4300347Z ##[endgroup]
+2026-10-16T09:23:58.4303216Z ##[group]Disabling automatic garbage collection
+2026-10-16T09:23:58.4305537Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T09:23:58.4342573Z ##[endgroup]
+2026-10-16T09:23:58.4345054Z ##[group]Setting up auth
+2026-10-16T09:23:58.4351083Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T09:23:58.4391711Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T09:23:58.4788663Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T09:23:58.4830780Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T09:23:58.5080067Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T09:23:58.5120856Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T09:23:58.5371482Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T09:23:58.5414917Z ##[endgroup]
+2026-10-16T09:23:58.5418258Z ##[group]Fetching the repository
+2026-10-16T09:23:58.5427838Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +777faab671518f123037d2ebd3eeec6f30aa9acd:refs/remotes/origin/opencode/۱۲۳
+2026-10-16T09:23:58.7666646Z From https://github.com/m-cyber12/1
+2026-10-16T09:23:58.7669891Z  * [new ref]         777faab671518f123037d2ebd3eeec6f30aa9acd -> origin/opencode/۱۲۳
+2026-10-16T09:23:58.7676741Z ##[endgroup]
+2026-10-16T09:23:58.7679589Z ##[group]Determining the checkout info
+2026-10-16T09:23:58.7682909Z ##[endgroup]
+2026-10-16T09:23:58.7684882Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T09:23:58.7745027Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T09:23:58.7781528Z ##[group]Checking out the ref
+2026-10-16T09:23:58.7787274Z [command]/usr/bin/git checkout --progress --force -B opencode/۱۲۳ refs/remotes/origin/opencode/۱۲۳
+2026-10-16T09:23:58.7887943Z Switched to a new branch 'opencode/۱۲۳'
+2026-10-16T09:23:58.7895414Z branch 'opencode/۱۲۳' set up to track 'origin/opencode/۱۲۳'.
+2026-10-16T09:23:58.7900862Z ##[endgroup]
+2026-10-16T09:23:58.7943754Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T09:23:58.7971102Z 777faab671518f123037d2ebd3eeec6f30aa9acd

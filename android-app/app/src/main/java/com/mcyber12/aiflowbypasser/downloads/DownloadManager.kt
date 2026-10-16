@@ -13,7 +13,7 @@ object DownloadManager {
     fun startDownload(name: String) {
         val download = DownloadInfo(name)
         synchronized(downloads) {
-            downloads.addFirst(download)
+            downloads.add(download)
         }
     }
 
@@ -29,7 +29,7 @@ object DownloadManager {
         )
         synchronized(downloads) {
             downloads.removeIf { it.name == name }
-            downloads.addFirst(download)
+            downloads.add(download)
         }
     }
 
