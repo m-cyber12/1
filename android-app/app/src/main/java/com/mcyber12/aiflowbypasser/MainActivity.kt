@@ -8,8 +8,12 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.webkit.WebSettingsCompat
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +48,21 @@ class MainActivity : AppCompatActivity() {
         }
         container.addView(toggleButton, buttonParams)
 
+        val splash = TextView(this).apply {
+            text = "Nova Web"
+            textSize = 34f
+            setTextColor(Color.parseColor("#A78BFA"))
+            gravity = android.view.Gravity.CENTER
+            background = ColorDrawable(Color.parseColor("#111827"))
+        }
+        container.addView(
+            splash,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+
         setContentView(container)
 
         val settings = webView.settings
@@ -65,6 +84,10 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView?, url: String?, favicon: android.graphics.Bitmap?) {
                 inject(view)
+            }
+
+            override fun onPageFinished(view: WebView?, url: String?) {
+                splash.visibility = View.GONE
             }
 
         }
